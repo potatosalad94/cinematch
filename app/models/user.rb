@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_one :watchlist
   has_many :movies, through: :watchlist
+  has_many :selected_movies, through: :watchlist
 end
