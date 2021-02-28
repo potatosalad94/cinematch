@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  skip_before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: [:browse, :show]
 
   def browse
     # API call to get popular movies
@@ -16,4 +16,10 @@ class MoviesController < ApplicationController
     @cast = Tmdb::Movie.cast(params[:id])
     @trailer = Tmdb::Movie.videos(params[:id])
   end
+
+  def create_or_find
+
+  end
+
+
 end
