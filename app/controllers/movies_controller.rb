@@ -12,5 +12,8 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Tmdb::Movie.detail(params[:id])
+    @directors = Tmdb::Movie.director(params[:id])
+    @cast = Tmdb::Movie.cast(params[:id])
+    @trailer = Tmdb::Movie.videos(params[:id])
   end
 end

@@ -1,3 +1,33 @@
-<div class="container">
-  <%= @movie.title %>
+<div class="container my-4">
+  <div class="row">
+
+    <div class="col-12 col-lg-4">
+      <div class="movie-poster">
+        <img src="https://image.tmdb.org/t/p/w342<%= @movie.poster_path %>" alt="">
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-8">
+      <h1><%= @movie.title %></h1>
+      <h4>
+        <% movie_genre = [] %>
+        <% @movie.genres.each do |genre| %>
+          <% movie_genre << genre.name %>
+        <% end %>
+        Genre: <%= movie_genre.join(" | ") %>
+        </h4>
+        <h5>Release date: <%= @movie.release_date.to_date.strftime("%B, %Y") %></h5>
+        <h5>Director</h5>
+        <% @directors.each do |director| %>
+          <%= director.name %>
+        <% end %>
+        <h5>Cast</h5>
+        <% @cast.first(4).each do |actor| %>
+          <p><%= actor.name %></p>
+        <% end %>
+
+        <iframe width="600" height="340" src="https://www.youtube.com/embed/<%= @trailer.first.key %>"></iframe>
+    </div>
+
+  </div>
 </div>
