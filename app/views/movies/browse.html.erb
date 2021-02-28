@@ -1,0 +1,21 @@
+<div class="container my-4">
+  <div class="cards">
+    <% @popular_movies.each do |movie| %>
+      <%= link_to movie_path(movie.id) do  %>
+        <div class="card-product">
+          <img src="https://image.tmdb.org/t/p/w185<%= movie.poster_path %>" />
+          <div class="card-product-infos">
+            <h2><%= movie.title %></h2>
+            <p>
+              <% movie_genre = [] %>
+              <% movie.genre_ids.each do |id| %>
+                <% movie_genre << @repo['genres'].map { |genre| genre['name'] if genre['id'] == id }.compact.first %>
+              <% end %>
+              <%= movie_genre.join(" | ") %>
+            </p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
