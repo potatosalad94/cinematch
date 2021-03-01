@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
     @trailer = Tmdb::Movie.videos(params[:id])
   end
 
-  def create
+  def create_and_add
     @movie = Tmdb::Movie.detail(params[:id])
     # Ajouter la logique de find_or_create_by! et redireger vers l'action du controller pour ajouter a la watchlist
     @movie_to_add = Movie.find_or_create_by(tmdb_id: @movie.id) do |movie|
@@ -34,6 +34,13 @@ class MoviesController < ApplicationController
     end
 
     current_user.movies << @movie_to_add
+
+    redirect_to root_path
+  end
+
+  def remove_from_watchlist
+    @movie = Movie.where(tmdb_id: params[:id])
+    current_user.watchlists.find_by(movie_id: @movie).destroy
 
     redirect_to root_path
   end
