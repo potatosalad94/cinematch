@@ -3,5 +3,5 @@ class Movie < ApplicationRecord
   has_many :users, through: :watchlists
 
   validates :title, presence: true
-  validates_uniqueness_of :title
+  validates_uniqueness_of :title, scope: :tmdb_id
 end

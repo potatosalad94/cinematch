@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_01_085529) do
+ActiveRecord::Schema.define(version: 2021_03_01_112947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2021_03_01_085529) do
   create_table "movies", force: :cascade do |t|
     t.string "title"
     t.string "genres", default: [], array: true
-    t.integer "release_date"
-    t.integer "vote_average"
+    t.string "release_date"
+    t.float "vote_average"
     t.integer "runtime"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2021_03_01_085529) do
   create_table "watchlists", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "movie_id", null: false
-    t.boolean "seen"
+    t.boolean "seen", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["movie_id"], name: "index_watchlists_on_movie_id"
