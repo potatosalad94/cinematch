@@ -26,8 +26,8 @@ class MoviesController < ApplicationController
       movie.release_date = @movie.release_date
       movie.vote_average = @movie.vote_average
       movie.runtime = @movie.runtime
-      movie.directors = Tmdb::Movie.director(@movie.id).map { |director| director.name }
-      movie.cast = Tmdb::Movie.cast(@movie.id).first(4).map { |actor| actor.name }
+      movie.directors = Tmdb::Movie.director(@movie.id).map(&:name)
+      movie.cast = Tmdb::Movie.cast(@movie.id).first(4).map(&:name)
       movie.trailer_key = Tmdb::Movie.videos(@movie.id).first.key
       movie.overview = @movie.overview
       movie.poster_path = @movie.poster_path
@@ -39,8 +39,9 @@ class MoviesController < ApplicationController
   end
 
   def remove_from_watchlist
-    @movie = Movie.where(tmdb_id: params[:id])
+    @movie = Movie.find_by(tmdb_id: params[:id])
     current_user.watchlists.find_by(movie_id: @movie).destroy
+    @movie.destroy if @movie.users.blank?
 
     redirect_to root_path
   end
