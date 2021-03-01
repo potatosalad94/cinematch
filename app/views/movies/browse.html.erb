@@ -1,11 +1,13 @@
 <div class="container my-4">
   <div class="cards">
     <% @popular_movies.each do |movie| %>
-      <%= link_to movie_path(movie.id) do  %>
+
         <div class="card-product">
+         <%= link_to movie_path(movie.id) do  %>
           <img src="https://image.tmdb.org/t/p/w185<%= movie.poster_path %>" />
+         <% end %>
           <div class="card-product-infos">
-            <h2><%= movie.title %></h2>
+            <h2><%= link_to movie.title, movie_path(movie.id) %></h2>
             <p>
               <% movie_genre = [] %>
               <% movie.genre_ids.each do |id| %>
@@ -13,9 +15,10 @@
               <% end %>
               <%= movie_genre.join(" | ") %>
             </p>
+            <p><%= link_to "Add to Watchlist", movie_path(movie.id), method: :post  %> </p>
           </div>
         </div>
-      <% end %>
+
     <% end %>
   </div>
 </div>

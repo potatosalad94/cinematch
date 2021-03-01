@@ -19,6 +19,8 @@ class MoviesController < ApplicationController
 
   def add_to_watchlist
     @movie = Tmdb::Movie.detail(params[:id])
+    # Ajouter la logique de find_or_create_by! et redireger vers l'action du controller pour ajouter a la watchlist
+    redirect_to root_path
   end
 
 end
