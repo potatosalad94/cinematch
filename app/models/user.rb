@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  has_one :watchlist
-  has_many :movies, through: :watchlist
-  has_many :selected_movies, through: :watchlist
+  # has_one :watchlist
+  has_many :watchlists
+  has_many :movies, through: :watchlists
 end
