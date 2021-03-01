@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:browse, :show]
+  # skip_before_action :authenticate_user!, only: [:browse, :show]
 
   def browse
     # API call to get popular movies
@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
     @trailer = Tmdb::Movie.videos(params[:id])
   end
 
-  def add_to_watchlist
+  def create
     @movie = Tmdb::Movie.detail(params[:id])
     # Ajouter la logique de find_or_create_by! et redireger vers l'action du controller pour ajouter a la watchlist
     @movie_to_add = Movie.find_or_create_by(tmdb_id: @movie.id) do |movie|
@@ -32,6 +32,8 @@ class MoviesController < ApplicationController
       movie.overview = @movie.overview
       movie.poster_path = @movie.poster_path
     end
+
+    current_user.movies << @movie_to_add
 
     redirect_to root_path
   end

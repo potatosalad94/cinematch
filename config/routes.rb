@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root to: 'movies#browse'
 
   resources :movies, only: [:browse, :show]
-  post "movies/:id", to: "movies#add_to_watchlist"
+  post "movies/:id", to: "movies#create"
 
   resources :watchlists, only: :index
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

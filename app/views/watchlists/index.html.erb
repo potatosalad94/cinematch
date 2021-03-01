@@ -3,7 +3,7 @@
     <% @watchlist.each do |element| %>
 
         <div class="card-product">
-          <!-- <img src="https://image.tmdb.org/t/p/w185<%#= movie.poster_path %>" /> -->
+          <img src="https://image.tmdb.org/t/p/w185<%= element.movie.poster_path %>" />
           <div class="card-product-infos">
             <h2><%= element.movie.title %></h2>
             <p>
