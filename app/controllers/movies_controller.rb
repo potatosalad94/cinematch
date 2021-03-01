@@ -17,9 +17,8 @@ class MoviesController < ApplicationController
     @trailer = Tmdb::Movie.videos(params[:id])
   end
 
-  def create_or_find
-
+  def add_to_watchlist
+    @movie = Tmdb::Movie.detail(params[:id])
   end
-
 
 end

@@ -1,0 +1,21 @@
+<div class="container my-4">
+  <div class="cards">
+    <% @watchlist.each do |element| %>
+
+        <div class="card-product">
+          <!-- <img src="https://image.tmdb.org/t/p/w185<%#= movie.poster_path %>" /> -->
+          <div class="card-product-infos">
+            <h2><%= element.movie.title %></h2>
+            <p>
+              <% movie_genre = [] %>
+              <% element.movie.genres.each do |genre| %>
+                <% movie_genre << genre %>
+              <% end %>
+              <%= movie_genre.join(" | ") %>
+            </p>
+          </div>
+        </div>
+
+    <% end %>
+  </div>
+</div>
