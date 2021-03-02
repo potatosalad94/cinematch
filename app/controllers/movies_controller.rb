@@ -7,8 +7,8 @@ class MoviesController < ApplicationController
     @repo = JSON.parse(@reponse)
 
     if params[:query].present?
-      # @movies = Tmdb::Search.movie(params[:query]).results
-      @movies = Tmdb::Search.movie(params[:query]).results
+      # @movies = Tmdb::Search.movie(params[:query])
+      @pagy, @movies = pagy(Tmdb::Search.movie(params[:query]).results)
     else
       @movies = Tmdb::Movie.popular.results
     end
