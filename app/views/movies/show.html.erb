@@ -32,13 +32,14 @@
     </div>
 
   </div>
+  <% if !@trailer.blank? %>
+    <div class="row my-4">
+      <div class="col-12">
+        <iframe width="600" height="340" src="https://www.youtube.com/embed/<%= @trailer.first.key %>"></iframe>
 
-  <div class="row my-4">
-    <div class="col-12">
-      <iframe width="600" height="340" src="https://www.youtube.com/embed/<%= @trailer.first.key %>"></iframe>
-
-      <h3>Overview</h3>
-      <%= @movie.overview %>
+        <h3>Overview</h3>
+        <%= @movie.overview %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

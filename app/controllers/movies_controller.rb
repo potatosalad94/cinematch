@@ -2,12 +2,16 @@ class MoviesController < ApplicationController
   # skip_before_action :authenticate_user!, only: [:browse, :show]
 
   def browse
-    # API call to get popular movies
-    @popular_movies = Tmdb::Movie.popular.results
-
     # API call to get the movie genre
     @reponse = RestClient.get("https://api.themoviedb.org/3/genre/movie/list?api_key=#{ENV['TMDB_API_KEY']}&language=en-US")
     @repo = JSON.parse(@reponse)
+
+    if params[:query].present?
+      # @movies = Tmdb::Search.movie(params[:query]).results
+      @movies = Tmdb::Search.movie(params[:query]).results
+    else
+      @movies = Tmdb::Movie.popular.results
+    end
   end
 
   def show
@@ -22,7 +26,7 @@ class MoviesController < ApplicationController
     # Ajouter la logique de find_or_create_by! et redireger vers l'action du controller pour ajouter a la watchlist
     @movie_to_add = Movie.find_or_create_by(tmdb_id: @movie.id) do |movie|
       movie.title = @movie.title
-      movie.genres = @movie.genres.map { |genre| genre.name }
+      movie.genres = @movie.genres.map(&:name)
       movie.release_date = @movie.release_date
       movie.vote_average = @movie.vote_average
       movie.runtime = @movie.runtime
