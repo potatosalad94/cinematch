@@ -28,9 +28,9 @@
             </p>
 
             <% if !current_user.movies.map {|x| x.tmdb_id}.include? movie.id %>
-            <p><%= link_to "Add to Watchlist", movie_path(movie.id), method: :post  %></p>
+              <p><%= link_to "Add to Watchlist", movie_path(movie.id), method: :post %></p>
             <% else %>
-            <p><%= link_to "Remove from Watchlist", movie_path(movie.id), method: :delete %></p>
+              <p><%= link_to "Remove from Watchlist", movie_path(movie.id), method: :delete %></p>
             <% end %>
 
           </div>
