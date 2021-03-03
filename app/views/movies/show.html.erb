@@ -3,7 +3,11 @@
 
     <div class="col-12 col-lg-4">
       <div class="movie-poster">
-        <img src="https://image.tmdb.org/t/p/w342<%= @movie.poster_path %>" alt="">
+        <% if @movie.poster_path.nil? %>
+          <%= image_tag("movie_icon.jpg", alt: "#{@movie.title}", style:"width: 185px; height: auto") %>
+        <% else %>
+          <img src="https://image.tmdb.org/t/p/w342<%= @movie.poster_path %>" alt="#{@movie.title}" />
+        <% end %>
       </div>
     </div>
 
