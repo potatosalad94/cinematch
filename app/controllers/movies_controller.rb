@@ -7,8 +7,9 @@ class MoviesController < ApplicationController
     @repo = JSON.parse(@reponse)
 
     if params[:query].present?
-      # @movies = Tmdb::Search.movie(params[:query])
-      @pagy, @movies = pagy(Tmdb::Search.movie(params[:query]).results)
+      search = Tmdb::Search.movie(params[:query], page: params[:page])
+      @pagy = Pagy.new(count: search.total_results, page: search.page)
+      @movies = search.results
     else
       @movies = Tmdb::Movie.popular.results
     end
@@ -24,7 +25,7 @@ class MoviesController < ApplicationController
   def create_and_add
     @movie = Tmdb::Movie.detail(params[:id])
     # Ajouter la logique de find_or_create_by! et redireger vers l'action du controller pour ajouter a la watchlist
-    @movie_to_add = Movie.find_or_create_by(tmdb_id: @movie.id) do |movie|
+    movie_to_add = Movie.find_or_create_by(tmdb_id: @movie.id) do |movie|
       movie.title = @movie.title
       movie.genres = @movie.genres.map(&:name)
       movie.release_date = @movie.release_date
@@ -37,7 +38,7 @@ class MoviesController < ApplicationController
       movie.poster_path = @movie.poster_path
     end
 
-    current_user.movies << @movie_to_add
+    current_user.movies << movie_to_add
 
     redirect_to root_path
   end

@@ -15,7 +15,11 @@
 
         <div class="card-product">
          <%= link_to movie_path(movie.id) do  %>
-          <img src="https://image.tmdb.org/t/p/w185<%= movie.poster_path %>" />
+          <% if movie.poster_path.nil? %>
+            <%= image_tag "movie_icon.jpg", alt: "#{movie.title}" %>
+          <% else %>
+            <img src="https://image.tmdb.org/t/p/w185<%= movie.poster_path %>" alt="#{movie.title}" />
+          <% end %>
          <% end %>
           <div class="card-product-infos">
             <h2><%= link_to movie.title, movie_path(movie.id) %></h2>
@@ -40,4 +44,6 @@
   </div>
 </div>
 
-<%= pagy_nav(@pagy).html_safe %>
+<% if params[:query].present? %>
+  <%== pagy_nav(@pagy) %>
+<% end %>
