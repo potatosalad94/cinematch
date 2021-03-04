@@ -30,6 +30,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'devise'
 gem 'pagy'
+gem 'cloudinary'
 
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass'
