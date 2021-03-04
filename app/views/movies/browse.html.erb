@@ -9,30 +9,30 @@
   <div class="cards">
 
     <% @movies.each do |movie| %>
-        <div class="card-product">
-         <%= link_to movie_path(movie.id) do  %>
+      <div class="card-product">
+        <%= link_to movie_path(movie.id) do  %>
           <% if movie.poster_path.nil? %>
             <%= image_tag "movie_icon.jpg", alt: "#{movie.title}" %>
           <% else %>
             <img src="https://image.tmdb.org/t/p/w185<%= movie.poster_path %>" alt="#{movie.title}" />
           <% end %>
-         <% end %>
-          <div class="card-product-infos">
-            <h2><%= link_to movie.title, movie_path(movie.id) %></h2>
-            <p>
-              <% movie_genre = [] %>
-              <% movie.genre_ids.each do |id| %>
-                <% movie_genre << @repo['genres'].map { |genre| genre['name'] if genre['id'] == id }.compact.first %>
-              <% end %>
-              <%= movie_genre.join(" | ") %>
-            </p>
-            <% if !current_user.movies.map {|x| x.tmdb_id}.include? movie.id %>
-              <p><%= link_to "Add to Watchlist", movie_path(movie.id), method: :post %></p>
-            <% else %>
-              <p><%= link_to "Remove from Watchlist", movie_path(movie.id), method: :delete %></p>
+        <% end %>
+        <div class="card-product-infos">
+          <h2><%= link_to movie.title, movie_path(movie.id) %></h2>
+          <p>
+            <% movie_genre = [] %>
+            <% movie.genre_ids.each do |id| %>
+              <% movie_genre << @repo['genres'].map { |genre| genre['name'] if genre['id'] == id }.compact.first %>
             <% end %>
-          </div>
+            <%= movie_genre.join(" | ") %>
+          </p>
+          <% if !current_user.movies.map {|x| x.tmdb_id}.include? movie.id %>
+            <p><%= link_to "Add to Watchlist", movie_path(movie.id), method: :post %></p>
+          <% else %>
+            <p><%= link_to "Remove from Watchlist", movie_path(movie.id), method: :delete %></p>
+          <% end %>
         </div>
+      </div>
     <% end %>
 
   </div>

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'movies#browse'
 
-  resources :watchlists, only: [:index]
+  resources :watchlists, only: [:index, :show, :destroy]
 
   resources :movies, only: [:browse, :show]
   post "movies/:id", to: "movies#create_and_add"

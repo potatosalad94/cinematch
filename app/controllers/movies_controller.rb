@@ -23,22 +23,7 @@ class MoviesController < ApplicationController
 
   def create_and_add
     @movie = Tmdb::Movie.detail(params[:id])
-
-    movie_to_add = Movie.find_or_create_by(tmdb_id: @movie.id) do |movie|
-      movie.title = @movie.title
-      movie.genres = @movie.genres.map(&:name)
-      movie.release_date = @movie.release_date
-      movie.vote_average = @movie.vote_average
-      movie.runtime = @movie.runtime
-      movie.directors = Tmdb::Movie.director(@movie.id).map(&:name)
-      movie.cast = Tmdb::Movie.cast(@movie.id).first(4).map(&:name)
-      movie.trailer_key = Tmdb::Movie.videos(@movie.id).first.key
-      movie.overview = @movie.overview
-      movie.poster_path = @movie.poster_path
-    end
-
-    current_user.movies << movie_to_add
-
+    add_movie(@movie)
     redirect_to root_path
   end
 
@@ -49,4 +34,23 @@ class MoviesController < ApplicationController
 
     redirect_to root_path
   end
+
+  private
+
+  def add_movie(movie)
+    movie_to_add = Movie.find_or_create_by(tmdb_id: movie.id) do |f|
+      f.title = movie.title
+      f.genres = movie.genres.map(&:name)
+      f.release_date = movie.release_date
+      f.vote_average = movie.vote_average
+      f.runtime = movie.runtime
+      f.directors = Tmdb::Movie.director(movie.id).map(&:name)
+      f.cast = Tmdb::Movie.cast(movie.id).first(4).map(&:name)
+      f.trailer_key = Tmdb::Movie.videos(movie.id).first.key
+      f.overview = movie.overview
+      f.poster_path = movie.poster_path
+    end
+    current_user.movies << movie_to_add
+  end
+
 end

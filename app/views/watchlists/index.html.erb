@@ -1,11 +1,19 @@
 <div class="container my-4">
   <div class="cards">
-    <% @watchlist.each do |element| %>
+    <% @watchlists.each do |element| %>
 
         <div class="card-product">
-          <img src="https://image.tmdb.org/t/p/w185<%= element.movie.poster_path %>" />
+
+          <%= link_to watchlist_path(element.id) do  %>
+            <% if element.movie.poster_path.nil? %>
+              <%= image_tag "movie_icon.jpg", alt: "#{movie.title}" %>
+            <% else %>
+              <img src="https://image.tmdb.org/t/p/w185<%= element.movie.poster_path %>" alt="#{movie.title}" />
+            <% end %>
+          <% end %>
+
           <div class="card-product-infos">
-            <h2><%= element.movie.title %></h2>
+            <h2><%= link_to element.movie.title, watchlist_path(element.id) %></h2>
             <p>
               <% movie_genre = [] %>
               <% element.movie.genres.each do |genre| %>
