@@ -1,4 +1,5 @@
 <div class="container my-4">
+  <h1>My watchlist <i>(<%= pluralize(@watchlists.count, 'movie') %>)</i></h1>
   <div class="cards">
     <% @watchlists.each do |element| %>
 
