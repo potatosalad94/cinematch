@@ -7,8 +7,8 @@
 
 <div class="container my-4">
   <div class="cards">
-    <% @movies.each do |movie| %>
 
+    <% @movies.each do |movie| %>
         <div class="card-product">
          <%= link_to movie_path(movie.id) do  %>
           <% if movie.poster_path.nil? %>
@@ -26,17 +26,15 @@
               <% end %>
               <%= movie_genre.join(" | ") %>
             </p>
-
             <% if !current_user.movies.map {|x| x.tmdb_id}.include? movie.id %>
               <p><%= link_to "Add to Watchlist", movie_path(movie.id), method: :post %></p>
             <% else %>
               <p><%= link_to "Remove from Watchlist", movie_path(movie.id), method: :delete %></p>
             <% end %>
-
           </div>
         </div>
-
     <% end %>
+
   </div>
 </div>
 
