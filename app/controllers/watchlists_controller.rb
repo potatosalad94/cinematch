@@ -4,11 +4,18 @@ class WatchlistsController < ApplicationController
   end
 
   def show
-    @movie = Watchlist.find_by(id: params[:id]).movie
+    @watchlist = Watchlist.find_by(id: params[:id])
+    @movie = @watchlist.movie
+  end
 
-    # @directors = Tmdb::Movie.director(params[:id])
-    # @cast = Tmdb::Movie.cast(params[:id])
-    # @trailer = Tmdb::Movie.videos(params[:id])
+  def destroy
+    @watchlist = Watchlist.find_by(id: params[:id])
+    @watchlist.destroy
+
+    @movie = @watchlist.movie
+    @movie.destroy if @movie.users.blank?
+
+    redirect_to watchlists_path
   end
 
 end

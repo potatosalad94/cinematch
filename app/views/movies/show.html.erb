@@ -13,38 +13,46 @@
 
     <div class="col-12 col-lg-8">
       <h1><%= @movie.title %></h1>
-      <h6><%= link_to "Add to my watchlist", movie_path(@movie.id), method: :post %></h6>
+      <% if current_user.movies.map(&:tmdb_id).include? @movie.id %>
+        <p><%= link_to "Remove from Watchlist", movie_path(@movie.id), method: :delete %></p>
+      <% else %>
+        <p><%= link_to "Add to my watchlist", movie_path(@movie.id), method: :post %></p>
+      <% end %>
       <h4>
         <% movie_genre = [] %>
         <% @movie.genres.each do |genre| %>
           <% movie_genre << genre.name %>
         <% end %>
         Genre: <%= movie_genre.join(" | ") %>
-        </h4>
-        <h4>Runtime: <%= @movie.runtime %> minutes</h4>
-        <h4>Rating: <%= @movie.vote_average %>/10</h4>
-        <h5>Release date: <%= @movie.release_date.to_date.strftime("%B, %Y") %></h5>
-        <h5>Director</h5>
-        <% @directors.each do |director| %>
-          <%= director.name %>
-        <% end %>
-        <h5>Cast</h5>
-        <% @cast.first(4).each do |actor| %>
-          <p><%= actor.name %></p>
-        <% end %>
-
-
+      </h4>
+      <h4>Runtime: <%= @movie.runtime %> minutes</h4>
+      <h4>Rating: <%= @movie.vote_average %>/10</h4>
+      <h5>Release date: <%= @movie.release_date.to_date.strftime("%B, %Y") %></h5>
+      <h5>Director</h5>
+      <% @directors.each do |director| %>
+        <%= director.name %>
+      <% end %>
+      <h5>Cast</h5>
+      <% @cast.first(4).each do |actor| %>
+        <p><%= actor.name %></p>
+      <% end %>
     </div>
 
   </div>
+
   <% if !@trailer.blank? %>
     <div class="row my-4">
       <div class="col-12">
         <iframe width="600" height="340" src="https://www.youtube.com/embed/<%= @trailer.first.key %>"></iframe>
-
-        <h3>Overview</h3>
-        <%= @movie.overview %>
       </div>
     </div>
   <% end %>
+
+  <div class="row my-4">
+    <div class="col-12">
+      <h3>Overview</h3>
+      <%= @movie.overview %>
+    </div>
+  </div>
+
 </div>

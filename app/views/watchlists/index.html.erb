@@ -21,6 +21,7 @@
               <% end %>
               <%= movie_genre.join(" | ") %>
             </p>
+            <p><%= link_to "Remove from my watchlist", watchlist_path(element), method: :delete  %></p>
           </div>
         </div>
 
