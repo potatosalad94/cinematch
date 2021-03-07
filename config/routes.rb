@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  # get 'watchlists/create'
   devise_for :users
   root to: 'movies#browse'
 
   resources :watchlists, only: [:index, :show, :destroy]
+  resources :users, only: [:index, :show]
 
   resources :movies, only: [:browse, :show]
   post "movies/:id", to: "movies#create_and_add"
