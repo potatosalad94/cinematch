@@ -21,4 +21,6 @@ class User < ApplicationRecord
            through: :friend_sent, source: :sent_to
   has_many :received_requests, -> { merge(Friendship.not_friends) },
            through: :friend_request, source: :sent_by
+
+  validates :email, uniqueness: true
 end
