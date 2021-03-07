@@ -51,4 +51,15 @@ class FriendshipsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def delete_friend
+    @friendship = Friendship.find_by(sent_by_id: current_user.id, sent_to_id: params[:user_id], status: true)
+    @friendship2 = Friendship.find_by(sent_by_id: params[:user_id], sent_to_id: current_user.id, status: true)
+
+    @friendship.destroy
+    @friendship2.destroy
+
+    flash[:notice] = 'Friend Deleted!'
+    redirect_back(fallback_location: root_path)
+  end
+
 end

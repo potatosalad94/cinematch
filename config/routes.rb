@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         get 'accept_friend'
         get 'decline_friend'
         delete 'delete_pending'
+        delete 'delete_friend'
       end
     end
   end
