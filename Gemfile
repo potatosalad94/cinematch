@@ -28,6 +28,7 @@ gem 'activeresource'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
+gem 'pg_search'
 gem 'devise'
 gem 'pagy'
 gem 'cloudinary'

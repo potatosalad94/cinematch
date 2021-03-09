@@ -1,6 +1,10 @@
 class WatchlistsController < ApplicationController
   def index
-    @pagy, @watchlists = pagy(current_user.watchlists)
+    if params[:query].present?
+      @pagy, @watchlists = pagy(Watchlist.global_search(params[:query]))
+    else
+      @pagy, @watchlists = pagy(current_user.watchlists)
+    end
   end
 
   def show
