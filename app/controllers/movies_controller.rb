@@ -24,7 +24,7 @@ class MoviesController < ApplicationController
   def create_and_add
     @movie = Tmdb::Movie.detail(params[:id])
     add_movie(@movie)
-    redirect_to root_path
+    redirect_back(fallback_location: root_path)
   end
 
   def remove_from_watchlist
@@ -32,7 +32,7 @@ class MoviesController < ApplicationController
     current_user.watchlists.find_by(movie_id: @movie).destroy
     @movie.destroy if @movie.users.blank?
 
-    redirect_to root_path
+    redirect_back(fallback_location: root_path)
   end
 
   private

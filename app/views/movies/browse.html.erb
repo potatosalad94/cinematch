@@ -6,7 +6,14 @@
 </div>
 
 <div class="container my-4">
-  <h1>Popular Movies</h1>
+
+  <% if params[:query].present? %>
+    <h1>Search</h1>
+  <% else %>
+    <h1>Popular Movies</h1>
+  <% end %>
+
+
   <div class="cards">
 
     <% @movies.each do |movie| %>

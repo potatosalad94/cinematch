@@ -23,6 +23,11 @@
               <%= movie_genre.join(" | ") %>
             </p>
             <p><%= link_to "Remove from my watchlist", watchlist_path(element), method: :delete  %></p>
+            <% if element.seen? %>
+              <p><%= link_to "Mark as not seen", mark_as_not_seen_path(element) %></p>
+            <% else %>
+              <p><%= link_to "Mark as seen", mark_as_seen_path(element) %></p>
+            <% end %>
           </div>
         </div>
 
