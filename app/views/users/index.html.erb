@@ -2,21 +2,22 @@
 
   <% unless @friends.empty? %>
     <div class="card my-5 py-3 bg-light shadow">
-        <h2 class="center pb-3 text-dark border-bottom">My Friends</h2>
+        <h2 class="center pl-5 pb-3 text-dark border-bottom">My Friends</h2>
         <% @friends.each do |f|%> <!-- Shows all users that have accepted current user's friend request and have become friends  -->
-          <div class="d-flex align-items-center mb-2 border-bottom py-2">
-            <div class="col-auto p-0 pl-5 text-capitalize">
-
-                <p><%= "#{f.first_name} #{f.last_name}" %></p>
-
+          <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
+            <div class="col-auto p-0 pl-5 d-flex align-items-center">
+              <% if f.photo.key.nil? %>
+                <%= image_tag "user_icon.png", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+              <% else %>
+                <%= cl_image_tag f.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+              <% end %>
+              <p class="ml-3 mb-0"><%= "#{f.first_name} #{f.last_name}" %></p>
             </div>
-            <div class="col-auto p-0 px-1">|</div>
-            <div class="col-auto p-0">
-              <button class= "btn btn-friend shadow">  <i class="fas fa-user-friends"></i> Friend </button>
+
+            <div class="col-auto mb-2 pr-5">
+              <button type="button" class="btn btn-danger shadow" data-toggle="modal" data-target="#delete-modal"><i class="fas fa-user-minus"></i>&nbsp;&nbsp;Delete friend</button>
             </div>
-
-            &nbsp;&nbsp;&nbsp; <%= link_to "Delete friend", delete_friend_user_friendships_path(f), method: :delete %>
-
+            <%= render 'friendships/deleteModal', object: f %>
           </div>
         <% end %>
     </div>
@@ -24,65 +25,84 @@
 
   <% unless @pending_requests.empty? %>
     <div class="card my-5 py-3 bg-light shadow">
-        <h2 class="center pb-3 text-dark border-bottom">Sent Friend Requests</h2>
+        <h2 class="center pl-5 pb-3 text-dark border-bottom">Sent Friend Requests</h2>
         <% @pending_requests.each do |user|%><!-- Shows all users that has sent current user a friend request -->
-          <div class="d-flex align-items-center mb-2 border-bottom py-2">
-            <div class="col-auto p-0 pl-5 text-capitalize">
-              <p><%= "#{user.first_name} #{user.last_name}" %></p>
+          <div class="d-flex justify-content-between align-items-center mb-2 border-bottom py-2">
+            <div class="col-auto p-0 pl-5 d-flex align-items-center">
+              <% if user.photo.key.nil? %>
+                <%= image_tag "user_icon.png", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+              <% else %>
+                <%= cl_image_tag user.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+              <% end %>
+              <p class="ml-3 mb-0"><%= "#{user.first_name} #{user.last_name}" %></p>
             </div>
-            <div class="col-auto p-0 px-1">|</div>
-            <div class="col-auto p-0">
+
+            <div class="col-auto mb-2 pr-5">
               <button class= "btn btn-secondary shadow" disabled>
                 <i class="fas fa-chalkboard-teacher"></i> Friend Request pending...
               </button>
+              &nbsp;&nbsp;&nbsp; <%= link_to "Cancel request", delete_pending_user_friendships_path(user), method: :delete %>
             </div>
-            &nbsp;&nbsp;&nbsp; <%= link_to "Cancel request", delete_pending_user_friendships_path(user), method: :delete %>
+
           </div>
-          <br><br>
+
         <% end %>
     </div>
   <% end %>
 
   <% unless @friend_requests.empty? %>
     <div class="card my-5 py-3 bg-light shadow">
-        <h2 class="center pb-3 text-dark border-bottom">Pending Friend Requests</h2>
+        <h2 class="center pl-5 pb-3 text-dark border-bottom">Pending Friend Requests</h2>
         <% @friend_requests.each do |user|%> <!-- Shows all users friend requests has been sent to -->
-          <div class="d-flex align-items-center mb-2 border-bottom py-2">
-            <div class="col-auto p-0 pl-5 text-capitalize">
-              <p><%= "#{user.first_name} #{user.last_name}" %></p>
+          <div class="d-flex justify-content-between align-items-center mb-2 border-bottom py-2">
+            <div class="col-auto p-0 pl-5 d-flex align-items-center">
+              <% if user.photo.key.nil? %>
+                <%= image_tag "user_icon.png", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+              <% else %>
+                <%= cl_image_tag user.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+              <% end %>
+              <p class="ml-3 mb-0"><%= "#{user.first_name} #{user.last_name}" %></p>
             </div>
-            <div class="col-auto p-0 px-1">|</div>
-            <div class="col-auto p-0">
-              <button class= "btn btn-pending shadow" data-toggle="modal" data-target="#decisionModal">
+
+            <div class="col-auto mb-2 pr-5 d-flex align-items-center">
+              <%= link_to accept_friend_user_friendships_path(user) do %><i class="fas fa-check-circle fa-2x" style="color:green"></i><% end %>
+              <%= link_to decline_friend_user_friendships_path(user), class: 'ml-3' do %><i class="fas fa-times-circle fa-2x" style="color:red"></i><% end %>
+              <!-- <button class= "btn btn-pending shadow" data-toggle="modal" data-target="#decisionModal">
                   <i class="fas fa-envelope"></i> Pending Friend Request...
-              </button>
+              </button> -->
             </div>
+            <%#= render 'friendships/decisionModal', object: user %>
           </div>
-            <%= render 'friendships/decisionModal', object: user %>
-          <br><br>
+
         <% end %>
     </div>
   <% end %>
 
   <div class="card my-5 py-3 bg-light shadow">
-      <h2 class="center pb-3 text-dark border-bottom">Other Users</h2>
+      <h2 class="center pl-5 pb-3 text-dark border-bottom">Other Users</h2>
       <% @users.each do |user|%> <!-- Shows all users friend requests has been sent to -->
         <% if current_user.id != user.id%><!-- Doesn't show current user on list -->
           <% unless possible_friend?(user) %> <!-- If user is not a friend and no request has been sent to or recieved from this user -->
-            <div class="d-flex align-items-center mb-2 border-bottom pb-2">
-              <div class="col-auto p-0 pl-5 text-capitalize">
-                <p><%= "#{user.first_name} #{user.last_name}" %></p>
+            <div class="d-flex justify-content-between align-items-center my-3">
+              <div class="col-auto p-0 pl-5 d-flex align-items-center">
+                <% if user.photo.key.nil? %>
+                  <%= image_tag "user_icon.png", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
+                <% else %>
+                  <%= cl_image_tag user.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+                <% end %>
+                <p class="ml-3 mb-0"><%= "#{user.first_name} #{user.last_name}" %></p>
               </div>
-              <div class="col-auto p-0 px-1">|</div>
-              <div class="col-auto p-0">
+
+              <div class="col-auto mb-2 pr-5">
                 <%= link_to user_friendships_path(user), method: :post do %>
-                  <button class= "btn btn-user shadow"> <i class="fas fa-share-square"></i> Send Friend Request? </button>
+                  <button class= "btn btn-primary shadow"><i class="fas fa-user-friends"></i>&nbsp;&nbsp;Send Friend Request?</button>
                 <% end %>
               </div>
              </div>
-              <br><br>
+            <hr>
           <% end %>
         <% end %>
+
       <% end %>
   </div>
 
