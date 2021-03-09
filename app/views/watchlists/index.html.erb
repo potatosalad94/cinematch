@@ -1,10 +1,17 @@
 <div class="container my-4">
   <h1>My watchlist <i>(<%= pluralize(@watchlists.count, 'movie') %>)</i></h1>
+
+  <div class="my-4">
+    <%= form_with url: watchlists_path, method: :get, class: 'form-inline' do |form| %>
+      <%= form.text_field :query, class: "form-control flex-grow-1 mr-2", placeholder: "Find a movie in my watchlist" %>
+      <%= form.submit "Search", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
   <div class="cards">
     <% @watchlists.each do |element| %>
 
         <div class="card-product">
-
           <%= link_to watchlist_path(element.id) do  %>
             <% if element.movie.poster_path.nil? %>
               <%= image_tag "movie_icon.jpg", alt: "#{movie.title}" %>
