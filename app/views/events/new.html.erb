@@ -1,2 +1,23 @@
-<h1>Events#new</h1>
-<p>Find me in app/views/events/new.html.erb</p>
+<div class="container">
+  <h1 class="my-4">New event</h1>
+    <%= simple_form_for @event do |f| %>
+      <div class="form-row">
+
+        <div class="col">
+          <div class="form-group">
+            <%= f.input :name %>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group custom-file">
+            <%= f.input :photo, as: :file, inline_label: 'Event photo', label: false, class: 'custom-file-input', id: "customFile" %>
+          </div>
+        </div>
+
+      </div>
+      <%= f.button :submit, class: 'btn btn-primary' %>
+
+    <% end %>
+
+</div>
