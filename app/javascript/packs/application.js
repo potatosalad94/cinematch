@@ -28,7 +28,7 @@ document.addEventListener('turbolinks:load', () => {
   // Call your functions here, e.g:
   // initSelect2();
 
-  const navbarLinks = document.querySelectorAll(".navbar-nav .nav-item:nth-child(-n+3) a");
+  const navbarLinks = document.querySelectorAll(".navbar-nav .nav-item:nth-child(-n+4) a");
   navbarLinks.forEach((x) => {
     if (x.href == window.location.href) {
       x.parentElement.classList.add("active");

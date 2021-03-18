@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   def index
+    @pagy, @events = pagy(current_user.attended_events)
   end
 
   def new
