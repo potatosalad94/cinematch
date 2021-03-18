@@ -7,6 +7,9 @@ class User < ApplicationRecord
   has_many :watchlists
   has_many :movies, through: :watchlists
 
+  has_many :events, dependent: :destroy
+  has_and_belongs_to_many :attended_events, class_name: 'Event'
+
   has_many :friend_sent, class_name: 'Friendship',
                          foreign_key: 'sent_by_id',
                          inverse_of: 'sent_by',
