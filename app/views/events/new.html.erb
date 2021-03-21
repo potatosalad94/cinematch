@@ -5,7 +5,7 @@
       <%= f.file_field :photo %>
       <%= f.text_field :name, placeholder: "Your event name" %>
       <div class="my-4">
-        <h5>Select the friends you want to add</h5>
+        <h5>Select the friends you want to invite</h5>
       </div>
       <%= f.collection_check_boxes :user_id, current_user.friends, :id, :full_name do |u| %>
         <ul>
