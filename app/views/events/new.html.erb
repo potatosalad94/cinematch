@@ -1,23 +1,35 @@
 <div class="container">
   <h1 class="my-4">New event</h1>
-    <%= simple_form_for @event do |f| %>
+
+    <!--<%#= simple_form_for @event do |f| %>
       <div class="form-row">
 
         <div class="col">
           <div class="form-group">
-            <%= f.input :name %>
+            <%#= f.input :name %>
           </div>
         </div>
 
         <div class="col">
           <div class="form-group custom-file">
-            <%= f.input :photo, as: :file, inline_label: 'Event photo', label: false, class: 'custom-file-input', id: "customFile" %>
+            <%#= f.input :photo, as: :file, inline_label: 'Event photo', label: false, class: 'custom-file-input', id: "customFile" %>
           </div>
         </div>
 
       </div>
-      <%= f.button :submit, class: 'btn btn-primary' %>
+      <%#= f.button :submit, class: 'btn btn-primary' %>
 
+    <%# end %> -->
+
+    <%= form_with model: @event do |f| %>
+      <%= f.text_field :name, placeholder: "Your event name" %>
+
+      <%= f.collection_check_boxes :user_id, current_user.friends, :id, :full_name do |u| %>
+        <ul>
+          <li><%= u.check_box %> <%= u.text %> <%= image_tag "user_icon.png", class: "avatar" %></li>
+        </ul>
+      <% end %>
+      <%= f.submit %>
     <% end %>
 
 </div>
