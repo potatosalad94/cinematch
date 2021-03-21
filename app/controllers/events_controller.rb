@@ -8,9 +8,16 @@ class EventsController < ApplicationController
   end
 
   def create
+    @event = current_user.events.build(event_params)
+    attending_users = params[:event][:user_id].reject(&:empty?).map { |x| User.find_by_id(x) }
+    @event.attendees << attending_users
+    @event.attendees << current_user
+    @event.save!
+    redirect_to event_path(@event)
   end
 
   def show
+    @event = Event.find(params[:id])
   end
 
   def edit
@@ -20,5 +27,11 @@ class EventsController < ApplicationController
   end
 
   def destroy
+  end
+
+  private
+
+  def event_params
+    params.require(:event).permit(:name, :photo)
   end
 end

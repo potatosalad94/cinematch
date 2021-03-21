@@ -1,2 +1,28 @@
-<h1>Events#show</h1>
-<p>Find me in app/views/events/show.html.erb</p>
+<div class="container my-4">
+
+    <h1><%= @event.name %></h1>
+    <h6><i>(created by <%= @event.owner == current_user ? "you" : "#{@event.owner.full_name}" %> )</i></h6>
+
+    <div class="card my-5 py-3 bg-light shadow">
+
+    <% @event.attendees.each do |user|%>
+      <% unless current_user == user %>
+
+        <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
+          <div class="col-auto p-0 pl-5 d-flex align-items-center">
+            <% if user.photo.key.nil? %>
+              <%= image_tag "user_icon.png", class: "avatar" %>
+            <% else %>
+              <%= cl_image_tag user.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+            <% end %>
+            <p class="ml-3 mb-0"><%= user.full_name %></p>
+          </div>
+        </div>
+
+      <% end %>
+    <% end %>
+
+
+  </div>
+
+</div>

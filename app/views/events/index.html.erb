@@ -9,15 +9,16 @@
 
     <% @events.each do |event|%>
       <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
-        <div class="col-auto p-0 pl-5 d-flex align-items-center">
-          <% if event.photo.key.nil? %>
-            <%= image_tag "event.png", class: "avatar" %>
-          <% else %>
-            <%= cl_image_tag event.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
-          <% end %>
-          <p class="ml-3 mb-0"><%= event.name %></p>
-        </div>
-
+        <%= link_to event_path(event) do %>
+          <div class="col-auto p-0 pl-5 d-flex align-items-center">
+            <% if event.photo.key.nil? %>
+              <%= image_tag "event.png", class: "avatar" %>
+            <% else %>
+              <%= cl_image_tag event.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+            <% end %>
+            <p class="ml-3 mb-0"><%= event.name %></p>
+          </div>
+        <% end %>
         <% if current_user == event.owner %>
           <div class="col-auto mb-2 pr-5">
             <button type="button" class="btn btn-danger shadow" data-toggle="modal" data-target="#delete-modal"><i class="far fa-calendar-minus"></i>&nbsp;&nbsp;Delete event</button>
