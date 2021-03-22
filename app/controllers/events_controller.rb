@@ -10,8 +10,8 @@ class EventsController < ApplicationController
   def create
     @event = current_user.events.build(event_params)
     attending_users = params[:event][:user_id].reject(&:empty?).map { |x| User.find_by_id(x) }
+    @event.attendees = [@event.owner]
     @event.attendees << attending_users
-    @event.attendees << current_user
     @event.save!
     redirect_to event_path(@event)
   end
@@ -21,12 +21,28 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @event = Event.find(params[:id])
   end
 
   def update
+    @event = Event.find(params[:id])
+    updated_attending_users = params[:event][:user_id].reject(&:empty?).map { |x| User.find_by_id(x) }
+    @event.attendees = [@event.owner]
+    @event.attendees << updated_attending_users
+    @event.update(event_params)
+    redirect_to event_path(@event)
   end
 
   def destroy
+    @event = Event.find(params[:id])
+    @event.destroy
+    redirect_to events_path
+  end
+
+  def quit
+    @event = Event.find(params[:id])
+    @event.attendees.delete(current_user)
+    redirect_to events_path
   end
 
   private

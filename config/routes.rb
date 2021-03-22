@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root to: 'movies#browse'
 
   resources :events
+  get "events/:id/quit", to: "events#quit", as: "quit_event"
+
 
   resources :watchlists, only: [:index, :show, :destroy]
   get "watchlists/:id/seen", to: "watchlists#mark_as_seen", as: "mark_as_seen"

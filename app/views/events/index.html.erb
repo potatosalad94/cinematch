@@ -21,12 +21,16 @@
         <% end %>
         <% if current_user == event.owner %>
           <div class="col-auto mb-2 pr-5">
-            <button type="button" class="btn btn-danger shadow" data-toggle="modal" data-target="#delete-modal"><i class="far fa-calendar-minus"></i>&nbsp;&nbsp;Delete event</button>
+            <%= link_to event_path(event), method: :delete do %>
+              <button type="button" class="btn btn-danger shadow" data-toggle="modal" data-target="#delete-modal"><i class="far fa-calendar-minus"></i>&nbsp;&nbsp;Delete event</button>
+            <% end %>
           </div>
           <%#= render 'friendships/deleteModal', object: event %>
           <% else %>
           <div class="col-auto mb-2 pr-5">
-            <button type="button" class="btn btn-danger shadow" data-toggle="modal" data-target="#delete-modal"><i class="far fa-calendar-minus"></i>&nbsp;&nbsp;Quit the event</button>
+            <%= link_to quit_event_path(event) do %>
+              <button type="button" class="btn btn-danger shadow ml-3"><i class="far fa-calendar-minus"></i>&nbsp;&nbsp;Quit the event</button>
+            <% end %>
           </div>
           <%#= render 'friendships/deleteModal', object: event %>
         <% end %>
