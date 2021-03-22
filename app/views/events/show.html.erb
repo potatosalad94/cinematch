@@ -1,0 +1,53 @@
+<div class="container my-4">
+
+
+  <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
+
+    <div class="d-flex align-items-center justify-content-start">
+      <% if @event.photo.key.nil? %>
+        <%= image_tag "event.png", class: "avatar" %>
+      <% else %>
+        <%= cl_image_tag @event.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+      <% end %>
+      <h2 class="my-0 ml-3"><%= @event.name %></h2>
+    </div>
+    <% if @event.owner == current_user %>
+      <div class="d-flex align-items-center justify-content-end">
+        <h6 class="m-0"><i>(Created by you | <%= link_to "Edit event", edit_event_path(@event) %>)</i></h6>
+        <%= link_to event_path, method: :delete do %>
+          <button type="button" class="btn btn-danger shadow ml-3"><i class="far fa-calendar-minus"></i>&nbsp;&nbsp;Delete the event</button>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="d-flex align-items-center justify-content-end">
+        <h6 class="m-0"><i>(Created by <%= @event.owner.full_name %>)</i></h6>
+        <%= link_to quit_event_path do %>
+          <button type="button" class="btn btn-danger shadow ml-3"><i class="far fa-calendar-minus"></i>&nbsp;&nbsp;Quit the event</button>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+   <div class="card my-5 py-3 bg-light shadow">
+
+    <% @event.attendees.each do |user|%>
+
+
+        <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
+          <div class="col-auto p-0 pl-5 d-flex align-items-center">
+            <% if user.photo.key.nil? %>
+              <%= image_tag "user_icon.png", class: "avatar" %>
+            <% else %>
+              <%= cl_image_tag user.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+            <% end %>
+            <p class="ml-3 mb-0"><%= user.full_name %></p>
+          </div>
+        </div>
+
+
+    <% end %>
+
+
+  </div>
+
+</div>

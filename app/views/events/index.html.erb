@@ -1,0 +1,48 @@
+<div class="container my-4">
+  <div class="d-flex align-items-center justify-content-between">
+    <h1>My events</h1>
+    <%= link_to new_event_path do %>
+      <button type="button" class="btn btn-primary shadow"><i class="far fa-calendar-plus"></i>&nbsp;&nbsp;New event</button>
+    <% end %>
+  </div>
+  <div class="card my-5 py-3 bg-light shadow">
+
+    <% @events.each do |event|%>
+      <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
+        <%= link_to event_path(event) do %>
+          <div class="col-auto p-0 pl-5 d-flex align-items-center">
+            <% if event.photo.key.nil? %>
+              <%= image_tag "event.png", class: "avatar" %>
+            <% else %>
+              <%= cl_image_tag event.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+            <% end %>
+            <p class="ml-3 mb-0"><%= event.name %></p>
+          </div>
+        <% end %>
+        <% if current_user == event.owner %>
+          <div class="col-auto mb-2 pr-5">
+            <%= link_to event_path(event), method: :delete do %>
+              <button type="button" class="btn btn-danger shadow" data-toggle="modal" data-target="#delete-modal"><i class="far fa-calendar-minus"></i>&nbsp;&nbsp;Delete event</button>
+            <% end %>
+          </div>
+          <%#= render 'friendships/deleteModal', object: event %>
+          <% else %>
+          <div class="col-auto mb-2 pr-5">
+            <%= link_to quit_event_path(event) do %>
+              <button type="button" class="btn btn-danger shadow ml-3"><i class="far fa-calendar-minus"></i>&nbsp;&nbsp;Quit the event</button>
+            <% end %>
+          </div>
+          <%#= render 'friendships/deleteModal', object: event %>
+        <% end %>
+      </div>
+    <% end %>
+
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="pagy">
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </div>
+</div>

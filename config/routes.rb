@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'movies#browse'
 
+  resources :events
+  get "events/:id/quit", to: "events#quit", as: "quit_event"
+
+
   resources :watchlists, only: [:index, :show, :destroy]
   get "watchlists/:id/seen", to: "watchlists#mark_as_seen", as: "mark_as_seen"
   get "watchlists/:id/unsee", to: "watchlists#mark_as_not_seen", as: "mark_as_not_seen"
