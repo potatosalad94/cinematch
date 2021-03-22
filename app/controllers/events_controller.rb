@@ -1,4 +1,6 @@
 class EventsController < ApplicationController
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :quit]
+
   def index
     @pagy, @events = pagy(current_user.attended_events)
   end
@@ -17,15 +19,12 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
   end
 
   def edit
-    @event = Event.find(params[:id])
   end
 
   def update
-    @event = Event.find(params[:id])
     updated_attending_users = params[:event][:user_id].reject(&:empty?).map { |x| User.find_by_id(x) }
     @event.attendees = [@event.owner]
     @event.attendees << updated_attending_users
@@ -34,13 +33,11 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
     redirect_to events_path
   end
 
   def quit
-    @event = Event.find(params[:id])
     @event.attendees.delete(current_user)
     redirect_to events_path
   end
@@ -49,5 +46,9 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:name, :photo)
+  end
+
+  def set_event
+    @event = Event.find(params[:id])
   end
 end
