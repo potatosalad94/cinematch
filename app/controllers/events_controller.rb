@@ -22,6 +22,7 @@ class EventsController < ApplicationController
   end
 
   def edit
+    @friend_list = @event.owner.friends.sort_by { |a| [(@event.attendees.include? a) ? 0 : 1, a.full_name] }
   end
 
   def update
