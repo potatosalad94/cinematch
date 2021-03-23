@@ -30,7 +30,7 @@
 
    <div class="card my-5 py-3 bg-light shadow">
 
-    <% @event.attendees.each do |user|%>
+    <% @event.attendees.sort_by(&:full_name).each do |user|%>
 
 
         <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
