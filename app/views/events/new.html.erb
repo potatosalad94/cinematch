@@ -7,12 +7,21 @@
       <div class="my-4">
         <h5>Select your attending friends</h5>
       </div>
-      <%= f.collection_check_boxes :user_id, current_user.friends, :id, :full_name do |u| %>
-        <ul class="friends-list">
-          <li class="no-bullet"><%= u.check_box %> <%= u.text %> <%= image_tag "user_icon.png", class: "avatar" %></li>
-        </ul>
-      <% end %>
-      <%= f.submit "Let's go!", class: 'btn btn-primary shadow' %>
+
+      <div class="cards-2">
+        <%= f.collection_check_boxes :user_id, current_user.friends.sort_by(&:full_name), :id, :full_name do |u| %>
+
+          <div class="card-user">
+            <ul class="friends-list">
+              <li class="no-bullet"><%= u.check_box %> <%= image_tag "user_icon.png", class: "avatar" %> <%= u.text %> </li>
+            </ul>
+          </div>
+
+        <% end %>
+      </div>
+      <div class="text-center mt-5">
+        <%= f.submit "Let's go!", class: 'btn btn-primary shadow' %>
+      </div>
     <% end %>
 
 </div>

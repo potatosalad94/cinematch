@@ -11,6 +11,7 @@
       <% end %>
       <h2 class="my-0 ml-3"><%= @event.name %></h2>
     </div>
+
     <% if @event.owner == current_user %>
       <div class="d-flex align-items-center justify-content-end">
         <h6 class="m-0"><i>(Created by you | <%= link_to "Edit event", edit_event_path(@event) %>)</i></h6>
@@ -26,12 +27,12 @@
         <% end %>
       </div>
     <% end %>
+
   </div>
 
    <div class="card my-5 py-3 bg-light shadow">
 
     <% @event.attendees.sort_by(&:full_name).each do |user|%>
-
 
         <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
           <div class="col-auto p-0 pl-5 d-flex align-items-center">
@@ -44,9 +45,7 @@
           </div>
         </div>
 
-
     <% end %>
-
 
   </div>
 

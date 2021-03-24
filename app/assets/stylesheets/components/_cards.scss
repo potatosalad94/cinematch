@@ -4,6 +4,16 @@
   grid-gap: 16px;
 }
 
+.cards-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.card-user{
+
+}
+
 .card-product {
   // overflow: hidden;
   // height: 120px;
@@ -43,6 +53,18 @@
 
 @media(max-width: 992px) {
   .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 100px) and (max-width: 800px) {
+  .cards-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1000px) {
+  .cards-2 {
     grid-template-columns: 1fr 1fr;
   }
 }

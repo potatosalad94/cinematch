@@ -13,14 +13,21 @@
         <h5>Select your attending friends</h5>
       </div>
 
-      <%= f.collection_check_boxes :user_id, @friend_list, :id, :full_name, { checked: @event.attendee_ids.map(&:to_param)} do |u| %>
-        <ul class="friends-list">
-          <li class="no-bullet"><%= u.check_box %> <%= u.text %> <%= image_tag "user_icon.png", class: "avatar" %></li>
-        </ul>
-      <% end %>
+      <div class="cards-2">
+        <%= f.collection_check_boxes :user_id, @friend_list, :id, :full_name, { checked: @event.attendee_ids.map(&:to_param)} do |u| %>
 
-      <%= f.submit "Update", class: 'btn btn-primary shadow' %>
+          <div class="card-user">
+            <ul class="friends-list">
+              <li class="no-bullet"><%= u.check_box %> <%= image_tag "user_icon.png", class: "avatar" %> <%= u.text %></li>
+            </ul>
+          </div>
 
+        <% end %>
+      </div>
+
+      <div class="text-center mt-5">
+        <%= f.submit "Update", class: 'btn btn-primary shadow' %>
+      </div>
     <% end %>
 
 </div>
