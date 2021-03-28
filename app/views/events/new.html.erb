@@ -2,8 +2,12 @@
   <h1 class="my-4">New event</h1>
 
     <%= form_with model: @event do |f| %>
-      <div><%= f.file_field :photo %></div>
-      <div class="my-4"><%= f.text_field :name, placeholder: "Your event name" %></div>
+      <div>
+        <%= f.file_field :photo %>
+      </div>
+      <div class="my-4">
+        <%= f.text_field :name, placeholder: "Your event name" %>
+      </div>
       <div class="my-4">
         <h5>Select your attending friends</h5>
       </div>
