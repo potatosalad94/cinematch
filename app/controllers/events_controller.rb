@@ -14,8 +14,14 @@ class EventsController < ApplicationController
     attending_users = params[:event][:user_id].reject(&:empty?).map { |x| User.find_by_id(x) }
     @event.attendees = [@event.owner]
     @event.attendees << attending_users
-    @event.save!
-    redirect_to event_path(@event)
+
+    if @event.save
+      flash[:notice] = "Event created!"
+      redirect_to event_path(@event)
+    else
+      flash[:alert] = "#{@event.errors[:name].first}"
+      render 'new'
+    end
   end
 
   def show
