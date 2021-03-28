@@ -14,15 +14,15 @@
 
       <div class="cards-2">
         <%= f.collection_check_boxes :user_id, current_user.friends.sort_by(&:full_name), :id, :full_name do |u| %>
-
           <div class="card-user">
-            <ul class="friends-list">
-              <li class="no-bullet"><%= u.check_box %> <%= image_tag "user_icon.png", class: "avatar" %> <%= u.text %> </li>
-            </ul>
+            <%= u.check_box %>
+            <%= u.label do %>
+              <%= image_tag "user_icon.png", class: "avatar" %> <span><%= u.text %></span>
+            <%end%>
           </div>
-
         <% end %>
       </div>
+
       <div class="text-center mt-5">
         <%= f.submit "Let's go!", class: 'btn btn-primary shadow' %>
       </div>
