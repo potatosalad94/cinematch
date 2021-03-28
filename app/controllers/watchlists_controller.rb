@@ -1,5 +1,6 @@
 class WatchlistsController < ApplicationController
   def index
+    @movies_count = current_user.movies.count
     if params[:query].present?
       @pagy, @watchlists = pagy(Watchlist.global_search(params[:query]))
     else

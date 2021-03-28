@@ -1,5 +1,5 @@
 <div class="container my-4">
-  <h1>My watchlist <i>(<%= pluralize(@watchlists.count, 'movie') %>)</i></h1>
+  <h1>My watchlist <i>(<%= pluralize(@movies_count, 'movie') %>)</i></h1>
 
   <div class="my-4">
     <%= form_with url: watchlists_path, method: :get, class: 'form-inline' do |form| %>
