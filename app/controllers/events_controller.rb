@@ -25,6 +25,25 @@ class EventsController < ApplicationController
   end
 
   def show
+    common_watchlists = []
+    @event.attendees.each do |user|
+      user.watchlists.each do |watchlist|
+        common_watchlists << watchlist
+      end
+    end
+    # transforme l'array de watchlsits en array de movies (avec doublons)
+
+    # =>  movie_array = common_watchlists.map { |x|  x.movie }
+    # ----------------------------------------------------
+
+    # renvoie un array des films en communs (si le film est en doublons alors
+    # plusieurs personne l'ont dans leur watchlist)
+
+    # =>  movie_array.select{ |e| movie_array.count(e) > 1 }
+    # ----------------------------------------------------
+
+    # forme abregee:
+    # =>  movie_array = common_watchlists.map(&:movie).select{ |e| movie_array.count(e) > 1 }
   end
 
   def edit
