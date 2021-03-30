@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :events
   get "events/:id/quit", to: "events#quit", as: "quit_event"
+  # get "events/:id/movie/:movie_id", to: "events#movie_details", as: "movie_details"
 
 
   resources :watchlists, only: [:index, :show, :destroy]
