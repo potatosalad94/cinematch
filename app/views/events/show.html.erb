@@ -64,7 +64,12 @@
         <div class="card-product-infos">
           <h2><%= link_to movie.title, movie_path(movie.id) %></h2>
           <p><%= movie.genres.join(" | ") %></p>
-
+          <p>in Watchlist:</p>
+          <% @event.attendees.each do |user| %>
+            <% if user.movies.include? movie %>
+              <p><%= user.full_name %></p>
+            <% end %>
+          <% end %>
           <%# if !current_user.movies.map {|x| x.tmdb_id}.include? movie.tmdb_id %>
            <!--  <p><%#= link_to "Add to my Watchlist", movie_path(movie.id), method: :post %></p> -->
           <%# else %>
