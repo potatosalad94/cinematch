@@ -49,7 +49,7 @@
 
   </div>
 
-  <h1>Movies in common <i>(<%= pluralize(@movies_count, 'movie') %>)</i></h1>
+  <h1><%= pluralize(@movies_count, 'movie') %> in common </h1>
 
   <div class="cards">
     <% @common_movies.each do |movie| %>
