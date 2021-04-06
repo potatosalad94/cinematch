@@ -64,10 +64,10 @@
         <div class="card-product-infos">
           <h2><%= link_to movie.title, movie_path(movie.id) %></h2>
           <p><%= movie.genres.join(" | ") %></p>
-          <p>in Watchlist:</p>
+          <p>in Watchlist of:</p>
           <% @event.attendees.each do |user| %>
             <% if user.movies.include? movie %>
-              <p><%= user.full_name %></p>
+              <p><%= user.full_name %> | <%= user.watchlists.select {|x| x.movie_id == movie.id}.first.seen? ? "Seen" : "Not seen" %></p>
             <% end %>
           <% end %>
           <%# if !current_user.movies.map {|x| x.tmdb_id}.include? movie.tmdb_id %>
