@@ -30,9 +30,9 @@
 
   </div>
 
-   <div class="card my-5 py-3 bg-light shadow">
-
-    <% @event.attendees.sort_by(&:full_name).each do |user|%>
+  <h3 class="mt-4">Attendees</h3>
+    <div class="card mb-5 py-3 bg-light shadow">
+      <% @event.attendees.sort_by(&:full_name).each do |user|%>
 
         <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
           <div class="col-auto p-0 pl-5 d-flex align-items-center">
@@ -45,17 +45,16 @@
           </div>
         </div>
 
-    <% end %>
+      <% end %>
 
   </div>
 
-  <h1>Movies in common <i>(<%= pluralize(@movies_count, 'movie') %>)</i></h1>
+  <h1><%= pluralize(@movies_count, 'movie') %> in common </h1>
 
   <div class="cards">
     <% @common_movies.each do |movie| %>
       <div class="card-product">
-        <%= link_to movie_path(movie.id) do  %>
-        <!-- <%#= link_to movie_details_path(movie.id) do  %> -->
+        <%= link_to movie_details_path(movie.id) do %>
           <% if movie.poster_path.nil? %>
             <%= image_tag "movie_icon.jpg", alt: "#{movie.title}" %>
           <% else %>
@@ -65,7 +64,12 @@
         <div class="card-product-infos">
           <h2><%= link_to movie.title, movie_path(movie.id) %></h2>
           <p><%= movie.genres.join(" | ") %></p>
-
+          <p>in Watchlist of:</p>
+          <% @event.attendees.each do |user| %>
+            <% if user.movies.include? movie %>
+              <p><%= user.full_name %> | <%= user.watchlists.select {|x| x.movie_id == movie.id}.first.seen? ? "Seen" : "Not seen" %></p>
+            <% end %>
+          <% end %>
           <%# if !current_user.movies.map {|x| x.tmdb_id}.include? movie.tmdb_id %>
            <!--  <p><%#= link_to "Add to my Watchlist", movie_path(movie.id), method: :post %></p> -->
           <%# else %>

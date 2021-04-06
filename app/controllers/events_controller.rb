@@ -71,10 +71,6 @@ class EventsController < ApplicationController
     redirect_to events_path
   end
 
-  def movie_details
-    @movie = Movie.find(params[:movie_id])
-  end
-
   private
 
   def event_params

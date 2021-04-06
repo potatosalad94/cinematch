@@ -35,6 +35,10 @@ class MoviesController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def movie_details
+    @movie = Movie.find(params[:id])
+  end
+
   private
 
   def add_movie(movie)
