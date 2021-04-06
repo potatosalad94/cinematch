@@ -14,7 +14,7 @@
     <div class="col-12 col-lg-8">
       <h1><%= @movie.title %></h1>
 
-      <h6><%= link_to "Remove from my watchlist", watchlist_path(@watchlist), method: :delete  %></h6>
+      <h6><%= link_to "Remove from my watchlist", watchlist_path(@watchlist), method: :delete %></h6>
 
       <h4>Genre: <%= @movie.genres.join(" | ") %></h4>
       <h4>Runtime: <%= @movie.runtime %> minutes</h4>
