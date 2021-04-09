@@ -30,56 +30,69 @@
 
   </div>
 
-  <h3 class="mt-4">Attendees</h3>
-    <div class="card mb-5 py-3 bg-light shadow">
-      <% @event.attendees.sort_by(&:full_name).each do |user|%>
-
-        <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
-          <div class="col-auto p-0 pl-5 d-flex align-items-center">
-            <% if user.photo.key.nil? %>
-              <%= image_tag "user_icon.png", class: "avatar" %>
-            <% else %>
-              <%= cl_image_tag user.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+  <div class="row">
+    <div class="col-12 col-lg-8">
+      <h3 class="mt-4"><%= pluralize(@movies_count, 'movie') %> in common </h3 class="mt-4">
+      <div class="cards">
+        <% @common_movies.each do |movie| %>
+          <div class="card-product">
+            <%= link_to movie_details_path(movie.id) do %>
+              <% if movie.poster_path.nil? %>
+                <%= image_tag "movie_icon.jpg", alt: "#{movie.title}" %>
+              <% else %>
+                <img src="https://image.tmdb.org/t/p/w185<%= movie.poster_path %>" alt="#{movie.title}" />
+              <% end %>
             <% end %>
-            <p class="ml-3 mb-0"><%= user.full_name %></p>
+            <div class="card-product-infos">
+              <h2><%= link_to movie.title, movie_path(movie.id) %></h2>
+              <p><%= movie.genres.join(" | ") %></p>
+              <p>in Watchlist of:</p>
+              <div class="users-info">
+                <% @event.attendees.each do |user| %>
+                  <% if user.movies.include? movie %>
+                    <% if user.watchlists.select {|x| x.movie_id == movie.id}.first.seen? %>
+                      <div class="d-flex align-items-center justify-content-between user-info">
+                        <div><%= user.full_name %></div> <div><i class="far fa-eye"></i></div>
+                      </div>
+                    <% else %>
+                      <div class="d-flex align-items-center justify-content-between user-info">
+                        <div><%= user.full_name %></div> <div><i class="far fa-eye-slash"></i></div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+              <%# if !current_user.movies.map {|x| x.tmdb_id}.include? movie.tmdb_id %>
+               <!--  <p><%#= link_to "Add to my Watchlist", movie_path(movie.id), method: :post %></p> -->
+              <%# else %>
+                <!-- <p><%#= link_to "Remove from my Watchlist", movie_path(movie.id), method: :delete %></p> -->
+              <%# end %>
+
+            </div>
           </div>
-        </div>
-
-      <% end %>
-
-  </div>
-
-  <h1><%= pluralize(@movies_count, 'movie') %> in common </h1>
-
-  <div class="cards">
-    <% @common_movies.each do |movie| %>
-      <div class="card-product">
-        <%= link_to movie_details_path(movie.id) do %>
-          <% if movie.poster_path.nil? %>
-            <%= image_tag "movie_icon.jpg", alt: "#{movie.title}" %>
-          <% else %>
-            <img src="https://image.tmdb.org/t/p/w185<%= movie.poster_path %>" alt="#{movie.title}" />
-          <% end %>
         <% end %>
-        <div class="card-product-infos">
-          <h2><%= link_to movie.title, movie_path(movie.id) %></h2>
-          <p><%= movie.genres.join(" | ") %></p>
-          <p>in Watchlist of:</p>
-          <% @event.attendees.each do |user| %>
-            <% if user.movies.include? movie %>
-              <p><%= user.full_name %> | <%= user.watchlists.select {|x| x.movie_id == movie.id}.first.seen? ? "Seen" : "Not seen" %></p>
-            <% end %>
-          <% end %>
-          <%# if !current_user.movies.map {|x| x.tmdb_id}.include? movie.tmdb_id %>
-           <!--  <p><%#= link_to "Add to my Watchlist", movie_path(movie.id), method: :post %></p> -->
-          <%# else %>
-            <!-- <p><%#= link_to "Remove from my Watchlist", movie_path(movie.id), method: :delete %></p> -->
-          <%# end %>
-
-        </div>
       </div>
-    <% end %>
+    </div>
 
+    <div class="col-12 col-lg-4 order-first order-lg-0">
+      <h3 class="mt-4">Attendees</h3>
+      <div class="card mb-5 py-3 bg-light shadow">
+        <% @event.attendees.sort_by(&:full_name).each do |user|%>
+
+          <div class="d-flex align-items-center justify-content-between mb-2 border-bottom py-2">
+            <div class="col-auto p-0 pl-4 d-flex align-items-center">
+              <% if user.photo.key.nil? %>
+                <%= image_tag "user_icon.png", class: "avatar" %>
+              <% else %>
+                <%= cl_image_tag user.photo.key, :width=>40, :height=>40, :radius=>"max", :crop=>"thumb" %>
+              <% end %>
+              <p class="ml-3 mb-0"><%= user.full_name %></p>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
   </div>
 
 </div>

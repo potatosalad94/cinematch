@@ -1,13 +1,13 @@
-input[type="checkbox"] {
+input[type="checkbox"].event-edit-checkbox {
   display: none;
 }
 
-label{
+label.event-edit-label {
   position: relative;
   cursor: pointer;
 }
 
-label::before {
+label.event-edit-label::before {
   color: white;
   content: " ";
   display: block;
@@ -22,13 +22,13 @@ label::before {
   transition-duration: 0.4s;
 }
 
-:checked+label::before {
+:checked+label.event-edit-label::before {
   content: '✔';
   background-color: grey;
   z-index: 1;
   opacity: 0.8;
 }
 
-:checked+label img {
+:checked+label.event-edit-label img {
   transition-duration: 0.2s;
 }
